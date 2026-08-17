@@ -1,6 +1,6 @@
 import { useSyncExternalStore, useCallback } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { DB, Role, AttendanceStatus, AppNotification, CalendarTask, Intervention, User, Student, Teacher, Subject, SchoolClass, ParentStudentLink } from './types'
+import { DB, Role, AttendanceStatus, AppNotification, CalendarTask, Intervention, User, Student, Teacher, Subject, SchoolClass, ParentStudentLink, TeacherLeave, SchoolTimelineEvent, TimelineAudience } from './types'
 import { buildSeed } from './seed'
 import { addDays, todayISO, toISO } from '../utils/date'
 import { teacherName, subjectName } from './stats'
@@ -644,6 +644,62 @@ class Store {
     return this.db.users.find((u) => u.id === s?.userId)?.name ?? 'Your child'
   }
 
+  private adminUserIds(): string[] {
+    return this.db.users.filter((u) => u.role === 'admin').map((u) => u.id)
+  }
+
+  requestLeave(o: { teacherId: string; date: string; periods: number[]; reason: string }) {
+    const leave: TeacherLeave = { id: `lv_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`, ...o, status: 'pending', createdAt: toISO(new Date()) }
+    this.db.leaves.push(leave)
+    const admins = this.adminUserIds()
+    const name = teacherName(this.db, o.teacherId)
+    const label = o.periods.length ? `periods ${o.periods.join(', ')}` : 'the full day'
+    if (admins.length) this.sendNotification(admins, `Leave request: ${name}`, `On leave ${o.date} (${label}). Reason: ${o.reason}. Please arrange a substitution.`, 'system', 'high', '/admin/substitutions')
+    this.persist()
+    this.emit()
+    return leave
+  }
+
+  resolveLeave(id: string, status: 'approved' | 'declined') {
+    const leave = this.db.leaves.find((l) => l.id === id)
+    if (!leave) return
+    leave.status = status
+    leave.resolvedAt = toISO(new Date())
+    const t = this.db.teachers.find((x) => x.id === leave.teacherId)
+    if (t) this.sendNotification([t.userId], `Leave ${status}`, `Your leave request for ${leave.date} was ${status}.`, 'system', 'medium')
+    this.persist()
+    this.emit()
+  }
+
+  assignSubstitute(leaveId: string, substituteId: string) {
+    const leave = this.db.leaves.find((l) => l.id === leaveId)
+    if (!leave) return
+    const previous = leave.substituteId
+    leave.substituteId = substituteId
+    leave.status = 'substituted'
+    leave.resolvedAt = toISO(new Date())
+    const sub = this.db.teachers.find((x) => x.id === substituteId)
+    const orig = this.db.teachers.find((x) => x.id === leave.teacherId)
+    const label = (leave.periods ?? []).length ? `periods ${leave.periods!.join(", ")}` : `the full day`
+    if (sub) this.sendNotification([sub.userId], 'Substitution assigned', `You are substituting for ${teacherName(this.db, leave.teacherId)} on ${leave.date} (${label}).`, 'timetable', 'high', '/teacher/class-detail')
+    if (previous && previous !== substituteId) {
+      const old = this.db.teachers.find((x) => x.id === previous)
+      if (old) this.sendNotification([old.userId], 'Substitution reassigned', `You are no longer covering for ${teacherName(this.db, leave.teacherId)} on ${leave.date}.`, 'timetable', 'medium')
+    }
+    if (orig) this.sendNotification([orig.userId], 'Substitute arranged', `${teacherName(this.db, substituteId)} will cover you on ${leave.date} (${label}).`, 'timetable', 'medium')
+    this.persist()
+    this.emit()
+  }
+
+  addTimelineEvent(o: { title: string; detail: string; date: string; audience: TimelineAudience }) {
+    if (!o.title.trim()) return
+    const ev: SchoolTimelineEvent = { id: `tl_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, title: o.title.trim(), detail: o.detail.trim(), date: o.date, audience: o.audience, createdAt: toISO(new Date()) }
+    this.db.timelineEvents.unshift(ev)
+    this.persist()
+    this.emit()
+    return ev
+  }
+
   markNotificationRead(id: string) {
     const n = this.db.notifications.find((x) => x.id === id)
     if (n) n.read = true
@@ -774,7 +830,7 @@ class Store {
     if (!n) return null
     const existing = this.db.subjects.find((s) => s.name.toLowerCase() === n.toLowerCase())
     if (existing) return existing
-    const palette = ['#097FE8', '#9849E8', '#27918D', '#FF6D00', '#9C7054', '#FFB110', '#E0447A', '#5FA94F', '#B45309', '#0EA5E9', '#DB2777', '#059669']
+    const palette = ['#0A84FF', '#0066CC', '#1F9D5C', '#E8930C', '#4DB1FF', '#005BB5', '#2F9E5F', '#F5A623', '#9BD0FF', '#E5484D', '#D96A00', '#0A84FF']
     const color = palette[this.db.subjects.length % palette.length]
     const s: Subject = { id: `sub_custom_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, name: n, short: n.length > 8 ? n.slice(0, 7) + '…' : n, color }
     this.db.subjects.push(s)
@@ -1006,6 +1062,10 @@ export const api = {
   updateTeacher: (id: string, p: Partial<Teacher> & { name?: string }) => store.updateTeacher(id, p),
   addSubject: (name: string) => store.addSubject(name),
   replaceClassTimetable: (classId: string, entries: Omit<DB['timetable'][number], 'id'>[]) => store.replaceClassTimetable(classId, entries),
+  requestLeave: (o: Parameters<Store['requestLeave']>[0]) => store.requestLeave(o),
+  resolveLeave: (id: string, status: 'approved' | 'declined') => store.resolveLeave(id, status),
+  assignSubstitute: (leaveId: string, substituteId: string) => store.assignSubstitute(leaveId, substituteId),
+  addTimelineEvent: (o: Parameters<Store['addTimelineEvent']>[0]) => store.addTimelineEvent(o),
   addParentLink: (parentId: string, studentId: string) => store.addParentLink(parentId, studentId),
   linkChildByCode: (parentId: string, code: string) => store.linkChildByCode(parentId, code),
   unlinkChild: (parentId: string, studentId: string) => store.unlinkChild(parentId, studentId),

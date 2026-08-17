@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 22.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "apk": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_HACK_CLUB_AI_KEY": "sk-hc-v1-559786154e394c26b52cef98b1bcca03de0f2f43876944bcbcaf95a13bd1e4f1",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyB05t9ZbbJjzOug-zLTfZ2pt0Eh9aQ6oGY",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "school-analyzer-7934d",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "school-analyzer-7934d.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_DATABASE_URL": "https://school-analyzer-7934d-default-rtdb.firebaseio.com",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "school-analyzer-7934d.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "181286877673",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:181286877673:web:f5a34facc173f0b33a7378"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  }
+}

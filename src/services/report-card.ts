@@ -9,19 +9,19 @@ export interface ReportCardData {
   pdf: string
 }
 
-const PRIMARY = '#097FE8'
+const PRIMARY = '#0A84FF'
 const INK = '#000000'
-const MUTED = '#78736F'
+const MUTED = '#5A6B85'
 const LIGHT = '#EBEBEB'
-const CREAM = '#FCF8F5'
-const LIGHT_CREAM = '#FFF5ED'
-const PRIMARY_SOFT = '#E6F2FD'
-const SUCCESS_SOFT = '#E5F2F1'
-const WARNING_SOFT = '#FFF5E0'
-const BAND_BG = '#0075DE'
-const BAND_SUB = '#E6F2FD'
-const TREND_DOWN = '#F64932'
-const TREND_UP = '#27918D'
+const CREAM = '#EAF4FF'
+const LIGHT_CREAM = '#F2F8FF'
+const PRIMARY_SOFT = '#EAF4FF'
+const SUCCESS_SOFT = '#E7F6EE'
+const WARNING_SOFT = '#FDF3E3'
+const BAND_BG = '#0066CC'
+const BAND_SUB = '#EAF4FF'
+const TREND_DOWN = '#E5484D'
+const TREND_UP = '#1F9D5C'
 
 export function buildReportCardData(db: DB, studentId: string, schoolName: string, period = 'Term 1 · 2026–27'): ReportCardData {
   const student = db.students.find((s) => s.id === studentId)!
@@ -81,7 +81,7 @@ export function buildReportCardData(db: DB, studentId: string, schoolName: strin
   blocks.push({
     rects: [
       { x: 40, y: tableTop, w: 515, h: 30, color: PRIMARY },
-      { x: 40, y: tableTop + 30, w: 515, h: 4, color: '#0075DE' },
+      { x: 40, y: tableTop + 30, w: 515, h: 4, color: '#0A84FF' },
     ],
     texts: [
       { x: 56, y: tableTop + 19, s: 'SUBJECT', size: 9, bold: true, color: '#FFFFFF' },

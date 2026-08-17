@@ -204,6 +204,17 @@ export interface AiInsight {
   dismissed?: boolean
 }
 
+export type TimelineAudience = 'teacher' | 'parent' | 'student' | 'all'
+
+export interface SchoolTimelineEvent {
+  id: string
+  title: string
+  detail: string
+  date: string // ISO date
+  audience: TimelineAudience
+  createdAt: string
+}
+
 export interface DB {
   users: User[]
   students: Student[]
@@ -222,6 +233,22 @@ export interface DB {
   calendarTasks: CalendarTask[]
   interventions: Intervention[]
   interventionResults: InterventionResult[]
+  leaves: TeacherLeave[]
+  timelineEvents: SchoolTimelineEvent[]
   reports: AiReport[]
   insights: AiInsight[]
+}
+
+export type LeaveStatus = 'pending' | 'approved' | 'declined' | 'substituted'
+
+export interface TeacherLeave {
+  id: string
+  teacherId: string
+  date: string // ISO date
+  periods: number[]
+  reason: string
+  status: LeaveStatus
+  substituteId?: string
+  createdAt: string
+  resolvedAt?: string
 }

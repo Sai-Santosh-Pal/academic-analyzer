@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { useRouter } from 'expo-router'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useStore, api } from '@/data/store'
 import { C, F, S } from '@/theme'
 import { Screen, Card, Row, Ring, SectionHeader, Chip, Btn, IconBtn } from '@/components/ui'
@@ -21,10 +22,11 @@ export default function AdminDashboard() {
   const aiInsight = db.insights.find((i) => i.scope === 'school' && !i.dismissed)
   const emptySchool = db.students.length === 0 && db.teachers.length === 0 && db.classes.length === 0
   const fmtPct = (v: number) => (stats.students ? `${v}%` : '\u2014')
+const BLUE_SHADES = ['#0A84FF', 'rgba(10,132,255,0.72)', 'rgba(10,132,255,0.52)', 'rgba(10,132,255,0.36)', 'rgba(10,132,255,0.24)', 'rgba(10,132,255,0.16)', 'rgba(10,132,255,0.1)', '#0066CC']
 
   return (
     <Screen scroll>
-      <View style={{ backgroundColor: C.black, borderRadius: 22, padding: S.lg, marginBottom: S.lg }}>
+      <LinearGradient colors={['#0066CC', '#0A84FF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ borderRadius: 22, padding: S.lg, marginBottom: S.lg }}>
         <Row between>
           <Row gap={12}>
             <View style={{ width: 42, height: 42, borderRadius: 21, backgroundColor: 'rgba(255,255,255,0.16)', alignItems: 'center', justifyContent: 'center' }}>
@@ -59,7 +61,7 @@ export default function AdminDashboard() {
             <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '700' }}>flagged students</Text>
           </View>
         </Row>
-      </View>
+      </LinearGradient>
 
       {db.students.length === 0 && db.teachers.length === 0 ? (
         <Card style={{ marginTop: S.md, borderColor: C.primary + '44', borderWidth: 1 }}>
@@ -95,10 +97,10 @@ export default function AdminDashboard() {
 
           <Row gap={S.md} style={{ marginTop: S.md }}>
             <Card style={{ flex: 1, alignItems: 'center', paddingVertical: S.md }}>
-              <Ring value={stats.avgAttendance} size={64} label="ATTENDANCE" color={C.success} />
+              <Ring value={stats.avgAttendance} size={86} label="ATTENDANCE" color={C.success} />
             </Card>
             <Card style={{ flex: 1, alignItems: 'center', paddingVertical: S.md }}>
-              <Ring value={stats.avgAssignmentCompletion} size={64} label="HW DONE" color={C.info} />
+              <Ring value={stats.avgAssignmentCompletion} size={86} label="HW DONE" color={C.info} />
             </Card>
           </Row>
 
@@ -112,8 +114,8 @@ export default function AdminDashboard() {
 
           <SectionHeader title="Subject health" />
           <Card>
-            <BarChart data={subjects.map((s) => ({ label: s.name.slice(0, 4), value: s.avg, color: s.color }))} height={150} />
-            <Legend items={subjects.map((s) => ({ label: s.name, color: s.color, value: `${s.avg}%` }))} />
+            <BarChart data={subjects.map((s, i) => ({ label: s.name.slice(0, 4), value: s.avg, color: BLUE_SHADES[i % BLUE_SHADES.length] }))} height={150} />
+            <Legend items={subjects.map((s, i) => ({ label: s.name, color: BLUE_SHADES[i % BLUE_SHADES.length], value: `${s.avg}%` }))} />
           </Card>
 
           <SectionHeader title="Students needing attention" />

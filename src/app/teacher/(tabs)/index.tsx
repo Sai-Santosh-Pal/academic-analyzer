@@ -72,6 +72,7 @@ export default function TeacherDashboard() {
             <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>Attendance is marked by class teachers only.</Text>
           )}
           <Btn label="AI tools" variant="ghost" size="sm" style={{ backgroundColor: 'rgba(255,255,255,0.14)' }} onPress={() => router.push('/teacher/ai-tools')} />
+          <Btn label="On leave" variant="ghost" size="sm" style={{ backgroundColor: 'rgba(255,255,255,0.14)' }} onPress={() => router.push('/teacher/on-leave')} />
         </Row>
       </View>
 
@@ -85,6 +86,16 @@ export default function TeacherDashboard() {
       />
 
       <SectionHeader title="Classes taught" actionLabel="All classes" onAction={() => router.push('/teacher/classes')} />
+      <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: S.md, padding: 12 }} onPress={() => router.push('/timeline')}>
+        <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: C.primarySoft, alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name="timeline" size={16} color={C.primary} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={[F.h3, { fontSize: 13.5 }]}>School timeline</Text>
+          <Text style={[F.caption, { marginTop: 1 }]}>Announcements and events for teachers</Text>
+        </View>
+        <Icon name="chevron" size={15} color={C.text3} />
+      </Card>
       <View style={{ gap: 8 }}>
         {myClasses.map((c) => {
           const p = classPulse(db, c.id)

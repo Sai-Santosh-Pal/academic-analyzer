@@ -228,7 +228,7 @@ export async function generateClassTimetable(db: DB, opts: TimetableGenOptions):
   const busy = new Map<string, boolean>()
   for (const e of otherClassesBusy) busy.set(`${e.day}|${e.period}|${e.teacherId}`, true)
 
-  const ctx: GenContext = { classSubjects, teachers, busy, maxPerDay: 3, days: opts.days, periodsPerDay: opts.periodsPerDay }
+  const ctx: GenContext = { classSubjects, teachers, busy, maxPerDay: Math.max(1, opts.periodsPerDay - 2), days: opts.days, periodsPerDay: opts.periodsPerDay }
 
   const classTeacher = cls ? db.teachers.find((t) => t.classTeacherOfIds.includes(cls.id) || t.id === cls.classTeacherId) : undefined
   const classTeacherName = classTeacher ? db.users.find((u) => u.id === classTeacher.userId)?.name ?? classTeacher.id : null
@@ -262,7 +262,7 @@ export async function generateClassTimetable(db: DB, opts: TimetableGenOptions):
 RULES — STRICT:
 1. Every school day (day 0..days_of_week-1) must have exactly periods_per_day periods numbered 1..periods_per_day. No gaps, no missing periods.
 2. Every period must use one of the class_subjects and a teacher whose teaches list contains that subject name.
-3. A teacher must NEVER teach two classes at the same day+period (check teachers_already_busy_in_other_classes). Within the class itself a teacher may teach at most 3 periods in one day, spread out.
+3. A teacher must NEVER teach two classes at the same day+period (check teachers_already_busy_in_other_classes). Within the class itself a teacher may teach at most ${Math.max(1, opts.periodsPerDay - 2)} periods in one day (periods_per_day minus 2), so every teacher keeps at least 2 free periods each day. Spread assigned periods out.
 4. Keep subjects balanced: no subject more than 2 periods a day; spread subjects evenly across the week (a core subject roughly 4-5 times a week when there are 6+ periods a day, less for minor subjects).
 5. Honour extra_requirements exactly — they override the balance rules (e.g. "EVS every day first period").
 6. ZERO PERIOD: when schedule.zero_period.enabled is true, every day starts with a period 0 (homeroom) where the class teacher (schedule.zero_period.class_teacher_name) sits in the class with the students. Do NOT include period 0 in the timetable array — it is not scheduled and the class teacher is NOT double-booked by it. Period 1 is the first scheduled period and starts after the zero period ends.

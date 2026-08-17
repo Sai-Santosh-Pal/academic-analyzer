@@ -46,13 +46,13 @@ export default function TeacherAnalytics() {
           centerValue={`${pulse.avg}%`}
           centerLabel="CLASS AVG"
           segments={[
-            { value: pulse.improving, color: C.success, label: 'Improving' },
-            { value: pulse.stable, color: C.accent, label: 'Stable' },
-            { value: pulse.declining, color: C.danger, label: 'Declining' },
+            { value: pulse.improving, color: '#0A84FF', label: 'Improving' },
+            { value: pulse.stable, color: 'rgba(10,132,255,0.55)', label: 'Stable' },
+            { value: pulse.declining, color: 'rgba(10,132,255,0.25)', label: 'Declining' },
           ]}
         />
         <Text style={[F.h3, { marginTop: 6 }]}>{students.length} students</Text>
-        <Legend items={[{ label: 'Improving', color: C.success, value: String(pulse.improving) }, { label: 'Stable', color: C.accent, value: String(pulse.stable) }, { label: 'Declining', color: C.danger, value: String(pulse.declining) }]} />
+        <Legend items={[{ label: 'Improving', color: '#0A84FF', value: String(pulse.improving) }, { label: 'Stable', color: 'rgba(10,132,255,0.55)', value: String(pulse.stable) }, { label: 'Declining', color: 'rgba(10,132,255,0.25)', value: String(pulse.declining) }]} />
       </Card>
 
 

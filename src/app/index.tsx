@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Image } from 'react-native'
 import { Redirect, useRouter } from 'expo-router'
 import { useStore, api } from '@/data/store'
 import { C, F, S, shadow } from '@/theme'
@@ -56,11 +56,12 @@ export default function LoginScreen() {
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.bg }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: S.lg, paddingTop: 64, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <View style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: C.black, alignItems: 'center', justifyContent: 'center' }}>
-            <Icon name="school" size={18} color="#fff" strokeWidth={2} />
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+          <Image source={require('@/assets/images/logo.png')} style={{ width: 46, height: 46, borderRadius: 12 }} />
+          <View>
+            <Text style={{ fontSize: 24, fontWeight: '800', letterSpacing: -0.3, color: C.primaryDark }}>ARC</Text>
+            <Text style={[F.micro, { marginTop: 2, maxWidth: 240 }]}>Academic Risk & Change School Dashboard System</Text>
           </View>
-          <Text style={{ fontSize: 17, fontWeight: '800', letterSpacing: -0.2 }}>Academic Analyzer</Text>
         </View>
 
         <Text style={{ fontSize: 30, fontWeight: '800', letterSpacing: -0.5, marginTop: 28 }}>Sign in</Text>

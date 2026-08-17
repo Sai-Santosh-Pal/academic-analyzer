@@ -18,6 +18,7 @@ export default function AdminTabs() {
       <Tabs.Screen name="people" options={{ title: 'People', tabBarIcon: ({ color, size }) => <Icon name="users" size={size} color={color} /> }} />
       <Tabs.Screen name="classes" options={{ title: 'Classes', tabBarIcon: ({ color, size }) => <Icon name="school" size={size} color={color} /> }} />
       <Tabs.Screen name="timetable" options={{ title: 'Timetable', tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} /> }} />
+      <Tabs.Screen name="substitutions" options={{ title: 'Substitution', tabBarIcon: ({ color, size }) => <Icon name="refresh" size={size} color={color} /> }} />
       <Tabs.Screen name="more" options={{ title: 'More', tabBarIcon: ({ color, size }) => <Icon name="grid" size={size} color={color} /> }} />
     </Tabs>
   )

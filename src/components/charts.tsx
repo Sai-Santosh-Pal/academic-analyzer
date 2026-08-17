@@ -199,11 +199,11 @@ export function Heatmap({
   style?: StyleProp<ViewStyle>
 }) {
   const colorFor = (v: number) => {
-    if (v >= 95) return '#27918D'
-    if (v >= 85) return '#097FE8'
-    if (v >= 75) return '#FFB110'
-    if (v >= 60) return '#FF6D00'
-    return '#F64932'
+    if (v >= 95) return '#0A84FF'
+    if (v >= 85) return 'rgba(10,132,255,0.75)'
+    if (v >= 75) return 'rgba(10,132,255,0.52)'
+    if (v >= 60) return 'rgba(10,132,255,0.35)'
+    return 'rgba(10,132,255,0.18)'
   }
   return (
     <View style={[{ flexDirection: 'row' }, style]}>

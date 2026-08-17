@@ -13,6 +13,7 @@ export default function AdminLayout() {
       <Stack.Screen name="student-detail" />
       <Stack.Screen name="class-detail" />
       <Stack.Screen name="reports" />
+      <Stack.Screen name="timeline" />
       <Stack.Screen name="settings" />
     </Stack>
   )

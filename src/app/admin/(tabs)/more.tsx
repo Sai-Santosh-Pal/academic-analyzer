@@ -15,6 +15,7 @@ export default function AdminMore() {
   const items: { icon: Parameters<typeof Icon>[0]['name']; label: string; sub: string; href: string; onPress?: () => void }[] = [
     { icon: 'download', label: 'School reports', sub: 'AI school intelligence report', href: '/admin/reports' },
     { icon: 'bell', label: 'Notifications', sub: 'School-wide announcements', href: '/notifications' },
+    { icon: 'calendar', label: 'School timeline', sub: 'Add events for teachers, parents & students', href: '/admin/timeline' },
     { icon: 'timeline', label: 'Activity timeline', sub: 'All events in one view', href: '/timeline' },
     { icon: 'settings', label: 'Settings', sub: 'School details & data reset', href: '/admin/settings' },
     { icon: 'user', label: 'Profile', sub: 'Account details', href: '/profile' },

@@ -375,7 +375,7 @@ export async function pushCloudState(schoolId: string, db: DB, updatedAt: number
 const DB_ARRAY_FIELDS: (keyof DB)[] = [
   'users', 'students', 'teachers', 'parents', 'parentLinks', 'classes', 'subjects',
   'assessments', 'marks', 'attendance', 'assignments', 'submissions', 'timetable',
-  'notifications', 'calendarTasks', 'interventions', 'interventionResults', 'reports', 'insights',
+  'notifications', 'calendarTasks', 'interventions', 'interventionResults', 'leaves', 'timelineEvents', 'reports', 'insights',
 ]
 
 /** RTDB omits empty arrays; restore them so screens never hit undefined. */
@@ -397,6 +397,10 @@ export function normalizeDb(raw: Partial<DB> | undefined): DB {
     if (typeof s.gender !== 'string') s.gender = 'M'
     if (typeof s.attendanceProfile !== 'string') s.attendanceProfile = 'normal'
     if (typeof s.performanceProfile !== 'string') s.performanceProfile = 'stable'
+  }
+  for (const l of db.leaves) {
+    if (!Array.isArray(l.periods)) l.periods = []
+    if (typeof l.status !== 'string') l.status = 'pending'
   }
   return db
 }

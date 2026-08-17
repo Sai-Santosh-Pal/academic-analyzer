@@ -16,6 +16,7 @@ const KIND_META: Record<string, { icon: IconName; color: string; soft: string }>
   shift: { icon: 'alert', color: C.danger, soft: C.dangerSoft },
   result: { icon: 'check', color: C.success, soft: C.successSoft },
   notification: { icon: 'bell', color: C.text2, soft: C.bg },
+  notice: { icon: 'bell', color: C.primary, soft: C.primarySoft },
 }
 
 export default function TimelineScreen() {
@@ -23,10 +24,19 @@ export default function TimelineScreen() {
   const params = useLocalSearchParams<{ studentId?: string }>()
   const me = studentByUser(db, user?.id ?? '')
   const studentId = params.studentId ?? me?.id
-  if (!studentId || !user) {
-    return <Screen><Header title="Academic timeline" /><Text style={[F.body2, { textAlign: 'center', marginTop: 40 }]}>Timeline is available from a student context.</Text></Screen>
+  if (!user) {
+    return <Screen><Header title="School timeline" /><Text style={[F.body2, { textAlign: 'center', marginTop: 40 }]}>Sign in to view the timeline.</Text></Screen>
   }
-  const events = academicTimeline(db, studentId)
+
+  const audienceFor = (role: string) => (role === 'admin' ? ['all', 'teacher', 'parent', 'student'] : role === 'teacher' ? ['all', 'teacher'] : role === 'parent' ? ['all', 'parent'] : ['all', 'student'])
+  const allowed = audienceFor(user.role)
+  const schoolEvents = db.timelineEvents
+    .filter((e) => allowed.includes(e.audience))
+    .map((e) => ({ id: e.id, date: e.date, title: e.title, detail: e.detail, kind: 'notice' as const }))
+
+  let events: { id: string; date: string; title: string; detail: string; kind: string }[] = schoolEvents
+  if (studentId) events = [...schoolEvents, ...academicTimeline(db, studentId)]
+  events.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
 
   const groups: { date: string; items: typeof events }[] = []
   for (const e of events) {
@@ -37,38 +47,42 @@ export default function TimelineScreen() {
 
   return (
     <Screen scroll>
-      <Header title="Academic timeline" subtitle="How academic events relate over time" />
+      <Header title={studentId ? 'Academic timeline' : 'School timeline'} subtitle={user.role === 'admin' ? 'Timeline shown to teachers, parents and students' : 'School events and academic activity in one place'} />
       <Card style={{ backgroundColor: C.primarySoft, borderColor: C.primary + '30' }}>
         <Text style={[F.h3, { color: C.primary }]}>COLLECT → DETECT → EXPLAIN → ACT → MEASURE</Text>
         <Text style={[F.caption, { marginTop: 4 }]}>Every assessment, shift, intervention and follow-up result, in one place.</Text>
       </Card>
-      <View style={{ marginTop: S.lg, paddingLeft: 6 }}>
-        {groups.map((g, gi) => (
-          <View key={g.date} style={{ flexDirection: 'row' }}>
-            <View style={{ alignItems: 'center', width: 26 }}>
-              <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: C.primary, marginTop: 22 }} />
-              {gi < groups.length - 1 ? <View style={{ flex: 1, width: 2, backgroundColor: C.border, marginTop: 4 }} /> : null}
+      {groups.length ? (
+        <View style={{ marginTop: S.lg, paddingLeft: 6 }}>
+          {groups.map((g, gi) => (
+            <View key={g.date} style={{ flexDirection: 'row' }}>
+              <View style={{ alignItems: 'center', width: 26 }}>
+                <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: C.primary, marginTop: 22 }} />
+                {gi < groups.length - 1 ? <View style={{ flex: 1, width: 2, backgroundColor: C.border, marginTop: 4 }} /> : null}
+              </View>
+              <View style={{ flex: 1, marginLeft: 8, paddingBottom: S.lg }}>
+                <Text style={[F.micro, { color: C.primary, fontSize: 11, marginBottom: 6 }]}>{formatHuman(g.date, { weekday: true })}</Text>
+                {g.items.map((e) => {
+                  const meta = KIND_META[e.kind] ?? KIND_META.notice
+                  return (
+                    <Card key={e.id} style={{ marginBottom: 8, flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 }}>
+                      <View style={{ width: 32, height: 32, borderRadius: 10, backgroundColor: meta.soft, alignItems: 'center', justifyContent: 'center' }}>
+                        <Icon name={meta.icon} size={15} color={meta.color} />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={[F.h3, { fontSize: 13.5 }]}>{e.title}</Text>
+                        <Text style={[F.caption, { marginTop: 2 }]}>{e.detail}</Text>
+                      </View>
+                    </Card>
+                  )
+                })}
+              </View>
             </View>
-            <View style={{ flex: 1, marginLeft: 8, paddingBottom: S.lg }}>
-              <Text style={[F.micro, { color: C.primary, fontSize: 11, marginBottom: 6 }]}>{formatHuman(g.date, { weekday: true })}</Text>
-              {g.items.map((e) => {
-                const meta = KIND_META[e.kind]
-                return (
-                  <Card key={e.id} style={{ marginBottom: 8, flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 }}>
-                    <View style={{ width: 32, height: 32, borderRadius: 10, backgroundColor: meta.soft, alignItems: 'center', justifyContent: 'center' }}>
-                      <Icon name={meta.icon} size={15} color={meta.color} />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text style={[F.h3, { fontSize: 13.5 }]}>{e.title}</Text>
-                      <Text style={[F.caption, { marginTop: 2 }]}>{e.detail}</Text>
-                    </View>
-                  </Card>
-                )
-              })}
-            </View>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      ) : (
+        <Text style={[F.body2, { textAlign: 'center', marginTop: 32 }]}>No timeline events yet.</Text>
+      )}
     </Screen>
   )
 }
