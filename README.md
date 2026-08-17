@@ -1,56 +1,68 @@
-# Welcome to your Expo app 👋
+# Academic Analyzer
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A multi-role (student / teacher / parent / admin) school academic-management and early-intervention app built with Expo SDK 57, expo-router and TypeScript.
 
-## Get started
+- All statistics ("what changed", trends, early-warning flags) are computed on-device from a seeded demo dataset.
+- Real accounts run on Firebase (email/password auth + per-school Realtime Database): the school creates the account, then adds teachers, who invite parents, who add their wards. The Firebase config is hard-coded in `src/services/firebase.ts`.
+- Hack Club AI powers the assistant features — the app calls `https://ai.hackclub.com` directly with a key from `.env`. AI never invents numbers and its drafts are always teacher-reviewed.
+- imgbb hosts avatar images (optional); report cards are real PDFs generated on-device (zero dependencies), single or bulk (ZIP) for a whole class.
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Run it
 
 ```bash
-npm run reset-project
+npm install
+npx expo start          # app (Expo Go, simulator, or web)
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### AI (Hack Club AI)
 
-### Other setup steps
+1. Create an account and API key at https://hackclub.com/ai/ (dashboard).
+2. Put the key in `.env` as `EXPO_PUBLIC_HACK_CLUB_AI_KEY` (it is inlined into the app bundle, so treat it as public).
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+The app calls `https://ai.hackclub.com/proxy/v1/chat/completions` directly from every AI surface (investigations, study plans, lesson plans, interventions, weekly parent summaries, school intelligence, copilot, reports). If the call fails, the app silently switches to its built-in deterministic analytics engine. The `server/` proxy is now optional/legacy — only needed if you want to keep the key off the device.
 
-## Learn more
+## Optional integrations (all graceful)
 
-To learn more about developing your project with Expo, look at the following resources:
+Copy `.env.example` to `.env` and fill in values:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+| Variable | Purpose |
+| --- | --- |
+| `EXPO_PUBLIC_HACK_CLUB_AI_KEY` | Hack Club AI key (https://hackclub.com/ai/) — powers all assistant features. |
+| `EXPO_PUBLIC_IMGBB_KEY` | Hosts profile photos (https://api.imgbb.com) — used from the Profile screen. |
 
-## Join the community
+Firebase needs no configuration — the web-app config lives directly in `src/services/firebase.ts`. Data lives in the project's Realtime Database (`users/{uid}` profiles, `schools/{schoolId}`), and avatar images go through imgbb. For a production deployment, lock down the Realtime Database rules in the Firebase console (currently open for development).
 
-Join our community of developers creating universal apps.
+## Real accounts (Firebase)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Sign-in screen: email + password. "Create a school account" provisions the school (admin user + empty subject catalog).
+- Admin → People → **Add teacher** creates a teacher login (subjects + classes).
+- Teacher → Students → **Invite parent** creates a parent login.
+- Parent → Manage children → **Create ward account** creates a student login, linked to the parent.
+- Every account belongs to exactly one school; the school's data blob lives at `schools/{schoolId}/state/latest` and syncs live across devices.
+
+## Demo accounts
+
+| Role | User | Home |
+| --- | --- | --- |
+| Student | Aarav Sharma (`usr_student_demo`) | `/student` |
+| Teacher | Kavita Verma, Physics, class teacher of XI-A (`usr_teacher_demo`) | `/teacher` |
+| Parent | Rahul Sharma, two children (`usr_parent_demo`) | `/parent` |
+| Admin | Priya Deshmukh (`usr_admin_demo`) | `/admin` |
+
+The login screen lists all four; a "Reset demo" option restores the seeded dataset at any time.
+
+## Code map
+
+- `src/data/` — typed schema, deterministic seed (120 students, 5 classes), stats engine, observable store (local + cloud persistence).
+- `src/ai/` — client with backend → offline-engine fallback, structured context builder.
+- `src/components/` — design system (UI kit, icons, charts, AI result viewer, "what changed" strip).
+- `src/app/` — expo-router routes; `(student)`, `(teacher)`, `(parent)`, `(admin)` role groups plus shared screens (profile, notifications, timeline, report-card).
+- `src/services/` — PDF writer, ZIP writer, Firebase bridge, imgbb bridge.
+- `server/` — zero-dependency AI proxy (Hack Club AI / OpenRouter compatible).
+
+## Verification
+
+```bash
+npx tsc --noEmit
+npx expo export --platform web   # full production bundle check
+```
