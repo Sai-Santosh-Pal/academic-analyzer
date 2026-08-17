@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
-import Animated, { Keyframe, Easing } from 'react-native-reanimated';
+import Animated, { Keyframe, Easing, useReducedMotion } from 'react-native-reanimated';
 
 import classes from './animated-icon.module.css';
 const DURATION = 300;
@@ -39,28 +39,24 @@ const logoKeyframe = new Keyframe({
   },
 });
 
-const glowKeyframe = new Keyframe({
-  0: {
-    transform: [{ rotateZ: '-180deg' }, { scale: 0.8 }],
-    opacity: 0,
-  },
-  [DURATION / 1000]: {
-    transform: [{ rotateZ: '0deg' }, { scale: 1 }],
-    opacity: 1,
-    easing: Easing.elastic(0.7),
-  },
-  100: {
-    transform: [{ rotateZ: '7200deg' }],
-  },
-});
-
 export function AnimatedIcon() {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <View style={styles.iconContainer}>
+        <View style={styles.background}>
+          <div className={classes.expoLogoBackground} />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={require('@/assets/images/expo-logo.png')} />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.iconContainer}>
-      <Animated.View entering={glowKeyframe.duration(60 * 1000 * 4)} style={styles.glow}>
-        <Image style={styles.glow} source={require('@/assets/images/logo-glow.png')} />
-      </Animated.View>
-
       <Animated.View style={styles.background} entering={keyframe.duration(DURATION)}>
         <div className={classes.expoLogoBackground} />
       </Animated.View>
@@ -83,11 +79,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  glow: {
-    width: 201,
-    height: 201,
-    position: 'absolute',
   },
   iconContainer: {
     justifyContent: 'center',
