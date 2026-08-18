@@ -41,8 +41,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "0d018bea-6a25-45e8-a0a1-26eeb67fab2d"
+        "projectId": "6450378d-f6b7-4928-b73e-33f726994442"
       }
-    }
+    },
+    "owner": "saisantoshpal"
   }
 }
