@@ -1,0 +1,126 @@
+<section id="roles" class="pt-20 pb-10">
+  <div class="mx-auto w-full lg:px-24 max-w-7xl md:px-12 items-center px-8">
+    <div class="max-w-xl text-center mx-auto">
+      <p class="text-sm leading-normal font-bold uppercase text-accent-600">
+        Built for every role
+      </p>
+      <h2
+        class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl capitalize lg:text-4xl mt-4 font-medium text-base-900 lg:text-balance">
+        One workspace for the whole school
+      </h2>
+      <p
+        class="text-base leading-normal mt-4 text-base-500 font-medium lg:text-balance">
+        Sign in once — ARC routes everyone to the dashboard built for them.
+      </p>
+    </div>
+    <div
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-12 mx-auto">
+      {
+        [
+          {
+            name: "Students",
+            subtitle: "Own your progress",
+            color: "bg-accent-600",
+            text: "text-white",
+            subtext: "text-accent-100",
+            features: [
+              "AI study coach & recovery plans",
+              "Performance & attendance analytics",
+              "Calendar: homework, exams, timetable",
+              "PDF report card on tap",
+              "Early-warning explanations",
+            ],
+          },
+          {
+            name: "Teachers",
+            subtitle: "Teach, not tabulate",
+            color: "bg-base-950",
+            text: "text-white",
+            subtext: "text-base-100",
+            features: [
+              "Tap-to-cycle marks entry",
+              "Bulk attendance marking",
+              "AI lesson & class analysis",
+              "Interventions: plan → act → measure",
+              "AI-drafted parent messages",
+            ],
+          },
+          {
+            name: "Parents",
+            subtitle: "Stay in the loop",
+            color: "bg-white",
+            text: "text-base-900",
+            subtext: "text-base-500",
+            features: [
+              "Child dashboard with rings",
+              "Weekly plain-language AI summary",
+              "\"To discuss\" alerts",
+              "Reports library & PDF report cards",
+              "Link multiple children",
+            ],
+          },
+          {
+            name: "Admins",
+            subtitle: "Run the school",
+            color: "bg-accent-700",
+            text: "text-white",
+            subtext: "text-accent-100",
+            features: [
+              "School-wide KPIs & trends",
+              "Early-warning system with urgency scores",
+              "AI timetable generator, conflict-free",
+              "Teacher substitution auto-assign",
+              "AI school intelligence reports",
+            ],
+          },
+        ].map(
+          ({ name, subtitle, color, text, subtext, features }) => (
+            <div
+              class={`flex flex-col h-full p-1 lg:py-1 rounded-3xl ${color} ring-4 ring-base-50 border border-base-200`}>
+              <div>
+                <div
+                  class={`flex flex-col gap-3 p-8 rounded-[1.3rem] h-full ${color === "bg-white" ? "bg-white" : "bg-white/10"}`}>
+                  <div class="flex items-start justify-between w-full">
+                    <div>
+                      <h3
+                        class={`text-lg leading-normal sm:text-xl md:text-2xl font-medium ${text}`}>
+                        {name}
+                      </h3>
+                      <p
+                        class={`text-base leading-normal font-medium ${subtext}`}>
+                        {subtitle}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-8 pt-4">
+                <ul
+                  class={`flex flex-col gap-y-3 ${color === "bg-white" ? "text-base-500" : "text-base-100"}`}
+                  role="list">
+                  {features.map((feature) => (
+                    <li class="flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-4 shrink-0">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M5 12l5 5l10 -10"></path>
+                      </svg>
+                      <span class="text-base leading-normal">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ),
+        )
+      }
+    </div>
+  </div>
+</section>

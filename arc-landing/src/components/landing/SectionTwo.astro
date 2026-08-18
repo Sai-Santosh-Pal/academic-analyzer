@@ -1,0 +1,291 @@
+<section>
+  <div class="px-8 py-24 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+      <div class="lg:order-last">
+        <p class="text-sm leading-normal font-bold uppercase text-accent-600">
+          Tailored to every role
+        </p>
+        <h2
+          class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl capitalize lg:text-4xl mt-4 font-medium text-base-900">
+          Four role-specific homes, one source of truth
+        </h2>
+        <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+          After sign-in, everyone lands in their own workspace — admins run
+          the school, teachers teach, parents follow, students learn. No more
+          disconnected spreadsheets and paper registers.
+        </p>
+      </div>
+      <div class="lg:col-span-2">
+        <!-- Teacher analytics mockup -->
+        <div class="p-5 bg-[#EAF4FF] rounded-2xl">
+          <div
+            class="relative w-full bg-white rounded-2xl border border-base-200 p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-[#5A6B85]">
+                  Teacher dashboard
+                </p>
+                <p class="text-lg font-bold text-black tracking-tight mt-0.5">
+                  Kavita Verma · Physics
+                </p>
+              </div>
+              <span
+                class="inline-flex items-center font-semibold text-[11px] text-white bg-[#0A84FF] px-3 py-1 rounded-full">
+                XI-A class teacher
+              </span>
+            </div>
+
+            <div class="mt-4 grid grid-cols-3 gap-3">
+              <div class="rounded-xl bg-[#EAF4FF] p-3">
+                <p class="text-[10px] font-semibold text-[#5A6B85]">Class pulse</p>
+                <p class="text-lg font-bold text-[#0066CC]">81%</p>
+                <span class="text-[10px] font-semibold text-[#1F9D5C]">▲ Improving</span>
+              </div>
+              <div class="rounded-xl bg-[#EAF4FF] p-3">
+                <p class="text-[10px] font-semibold text-[#5A6B85]">Needs attention</p>
+                <p class="text-lg font-bold text-[#E5484D]">4</p>
+                <span class="text-[10px] font-semibold text-[#5A6B85]">students</span>
+              </div>
+              <div class="rounded-xl bg-[#EAF4FF] p-3">
+                <p class="text-[10px] font-semibold text-[#5A6B85]">Attendance today</p>
+                <p class="text-lg font-bold text-[#1F9D5C]">94%</p>
+                <span class="text-[10px] font-semibold text-[#5A6B85]">45 / 48</span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-center justify-between">
+                <p class="text-[10px] font-semibold text-[#5A6B85]">
+                  Subject comparison
+                </p>
+                <span class="text-[10px] text-[#0A84FF] font-semibold">Trend ▼</span>
+              </div>
+              <div class="mt-2 flex items-end gap-2 h-24">
+                {[
+                  { sub: "Physics", pct: 78, c: "#0A84FF" },
+                  { sub: "Chemistry", pct: 64, c: "#0A84FF" },
+                  { sub: "Maths", pct: 88, c: "#1F9D5C" },
+                  { sub: "Biology", pct: 71, c: "#0A84FF" },
+                  { sub: "EVS", pct: 83, c: "#1F9D5C" },
+                ].map(({ sub, pct, c }) => (
+                  <div class="flex-1 flex flex-col items-center gap-1">
+                    <span class="text-[10px] font-bold text-black">{pct}</span>
+                    <div
+                      class="w-full rounded-t-md"
+                      style={`height: ${pct * 1.1}px; background: ${c}`}>
+                    </div>
+                    <span class="text-[9px] font-medium text-[#5A6B85]">{sub}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="mt-4 flex items-center justify-between rounded-xl border border-[#FDEDEE] bg-[#FDEDEE]/60 px-3 py-2.5">
+              <p class="text-[11px] font-medium text-[#23324A]">
+                <span class="font-bold text-[#E5484D]">Marking pending</span> —
+                3 assessments await scores
+              </p>
+              <span class="text-[10px] font-bold text-[#E5484D]">Open →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="gap-x-2 gap-y-14 mt-12 lg:gap-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <div>
+          <h3
+            class="text-base leading-normal sm:text-lg md:text-xl text-base-900 font-medium">
+            Students own their progress
+          </h3>
+          <p class="text-base leading-normal mt-2 text-base-500 font-medium">
+            A personal dashboard with "why did this change?" answers, an AI
+            study coach, and a calendar that merges homework, exams and
+            timetable.
+          </p>
+        </div>
+        <ul
+          role="list"
+          class="space-y-1 mt-6 text-base font-medium text-base-900">
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                Performance trends &amp; analytics
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                AI study plans &amp; recovery plans
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div>
+          <h3
+            class="text-base leading-normal sm:text-lg md:text-xl text-base-900 font-medium">
+            Parents stay in the loop
+          </h3>
+          <p class="text-base leading-normal mt-2 text-base-500 font-medium">
+            A child dashboard with attendance and performance rings, "to
+            discuss" alerts, and plain-language weekly AI summaries.
+          </p>
+        </div>
+        <ul
+          role="list"
+          class="space-y-1 mt-6 text-base font-medium text-base-900">
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                Attendance &amp; missing-work alerts
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                One-tap PDF report cards
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div>
+          <h3
+            class="text-base leading-normal sm:text-lg md:text-xl text-base-900 font-medium">
+            Admins run the whole school
+          </h3>
+          <p class="text-base leading-normal mt-2 text-base-500 font-medium">
+            School-wide KPIs, early-warning dashboards, AI timetables with
+            conflict detection, and teacher substitution management.
+          </p>
+        </div>
+        <ul
+          role="list"
+          class="space-y-1 mt-6 text-base font-medium text-base-900">
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                AI timetable generator, conflict-free
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-5 text-accent-600"
+                slot="icon">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                  d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+                  stroke-width="0"
+                  fill="currentColor">
+                </path>
+              </svg>
+              <span class="text-base leading-normal">
+                AI school intelligence reports
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

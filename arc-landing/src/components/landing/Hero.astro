@@ -1,0 +1,176 @@
+<section class="overflow-hidden relative">
+  <div
+    class="absolute inset-x-0 top-0 h-[560px] bg-gradient-to-b from-accent-25 via-accent-50/60 to-white -z-10">
+  </div>
+  <div class="px-8 pt-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
+    <div class="max-w-3xl text-center mx-auto lg:text-balance mb-12">
+      <p class="text-sm leading-normal font-bold uppercase text-accent-600">
+        Academic Risk &amp; Change — School Dashboard System
+      </p>
+      <h2
+        class="text-xl/snug leading-tight tracking-tight sm:text-2xl/snug md:text-3xl/snug capitalize lg:text-4xl/snug mt-4 font-medium text-base-900">
+        One app. Four roles. Every student accounted for.
+      </h2>
+      <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+        ARC is a school-wide academic management and early-intervention
+        platform for students, teachers, parents and admins. Track marks,
+        attendance, assignments and interventions — flag at-risk students
+        early, and act before they fall behind.
+      </p>
+      <div
+        class="flex flex-wrap items-center gap-2 justify-center mx-auto mt-12">
+        <a
+          href="https://github.com/Sai-Santosh-Pal/academic-analyzer/releases/download/v1/arc.apk"
+          class="flex items-center justify-center gap-2 transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-700/50 h-10 px-5 py-2 text-sm font-medium rounded-md">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-4">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 5v14"></path>
+            <path d="M6 13l6 6l6 -6"></path>
+          </svg>
+          Download the app
+        </a>
+      </div>
+    </div>
+    <div
+      class="lg:gap-x-8 lg:grid-cols-3 max-w-4xl mt-8 mx-auto sm:gap-x-6 sm:gap-y-12 sm:grid sm:grid-cols-2 sm:space-y-0 space-y-6 text-center text-sm items-start">
+      {
+        [
+          {
+            title: "Offline-first",
+            description: "The full school dataset lives on-device, with optional live cloud sync.",
+          },
+          {
+            title: "AI grounded in real data",
+            description: "Every AI summary is computed from real app statistics and teacher-reviewed before publishing.",
+          },
+          {
+            title: "Early-warning system",
+            description: "Rule-based flags for subject decline, low attendance and missing assignments.",
+          },
+        ].map(({ title, description }) => (
+          <div class="text-base-500 lg:text-balance">
+            <strong class="text-base-700">{title}</strong> ━ {description}
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="relative w-full mx-auto max-w-7xl items-center py-14 pb-20">
+      <div
+        class="relative mx-auto max-w-[340px] sm:max-w-[360px] rounded-[2.6rem] border-[10px] border-base-900 bg-white shadow-2xl ring-1 ring-black/10">
+        <div
+          class="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-base-900 rounded-b-2xl z-10">
+        </div>
+        <div class="pt-10 pb-8 px-5 bg-[#EAF4FF] rounded-[2rem] overflow-hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-[#5A6B85]">
+                Student dashboard
+              </p>
+              <p class="text-lg font-bold text-black tracking-tight mt-0.5">
+                Good morning, Aarav
+              </p>
+            </div>
+            <div
+              class="w-9 h-9 rounded-full bg-[#0A84FF] text-white text-xs font-bold flex items-center justify-center">
+              AS
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            <div class="bg-white rounded-2xl p-3 shadow-sm">
+              <p class="text-[10px] font-semibold text-[#5A6B85]">Overall</p>
+              <div class="mt-1 flex items-center gap-2">
+                <div
+                  class="relative w-12 h-12 rounded-full flex items-center justify-center"
+                  style="background: conic-gradient(#0A84FF 0 78%, #DCE9F9 78% 100%)">
+                  <div class="w-9 h-9 bg-white rounded-full flex items-center justify-center">
+                    <span class="text-[10px] font-bold text-[#0066CC]">78%</span>
+                  </div>
+                </div>
+                <div class="text-[10px] text-[#1F9D5C] font-semibold bg-[#E7F6EE] rounded-full px-2 py-0.5">
+                  ▲ +3%
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-3 shadow-sm">
+              <p class="text-[10px] font-semibold text-[#5A6B85]">Attendance</p>
+              <div class="mt-1 flex items-center gap-2">
+                <div
+                  class="relative w-12 h-12 rounded-full flex items-center justify-center"
+                  style="background: conic-gradient(#1F9D5C 0 92%, #DCE9F9 92% 100%)">
+                  <div class="w-9 h-9 bg-white rounded-full flex items-center justify-center">
+                    <span class="text-[10px] font-bold text-[#1F9D5C]">92%</span>
+                  </div>
+                </div>
+                <div class="text-[10px] text-[#5A6B85] font-medium">
+                  Target 90%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 bg-white rounded-2xl p-3 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-[10px] font-semibold text-[#5A6B85]">Subjects</p>
+              <span class="text-[10px] text-[#0A84FF] font-semibold">See all</span>
+            </div>
+            <div class="mt-2 space-y-1.5">
+              {[
+                { name: "Mathematics", pct: 92, color: "#0A84FF" },
+                { name: "Science", pct: 76, color: "#0A84FF" },
+                { name: "EVS", pct: 84, color: "#1F9D5C" },
+              ].map(({ name, pct, color }) => (
+                <div>
+                  <div class="flex items-center justify-between text-[10px] font-medium">
+                    <span class="text-black">{name}</span>
+                    <span class="text-[#5A6B85]">{pct}%</span>
+                  </div>
+                  <div class="mt-0.5 h-1.5 bg-[#EAF4FF] rounded-full overflow-hidden">
+                    <div class="h-full rounded-full" style={`width: ${pct}%; background: ${color}`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mt-3 bg-white rounded-2xl p-3 shadow-sm">
+            <p class="text-[10px] font-semibold text-[#5A6B85]">
+              Early-warning flag
+            </p>
+            <div class="mt-1.5 flex items-center gap-2">
+              <span
+                class="inline-flex items-center text-[10px] font-bold text-white bg-[#E5484D] rounded-md px-2 py-0.5">
+                Attention
+              </span>
+              <p class="text-[10px] text-black font-medium leading-tight">
+                Science declined 11% over 4 weeks — suggested study plan ready
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-3 bg-[#0A84FF] rounded-2xl px-3 py-2.5 flex items-center justify-between shadow-sm">
+            <div>
+              <p class="text-[10px] font-semibold text-white/80">
+                Next deadline
+              </p>
+              <p class="text-xs font-bold text-white">Math homework · Fri</p>
+            </div>
+            <span class="text-[10px] font-bold text-[#0A84FF] bg-white rounded-md px-2 py-1">
+              Mark done
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

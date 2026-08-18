@@ -1,0 +1,84 @@
+<section>
+  <div class="px-8 pt-20 mx-auto md:px-12 lg:px-24 max-w-7xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
+      <div class="text-center lg:text-left">
+        <p
+          class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl capitalize lg:text-4xl font-medium text-base-900 lg:text-balance">
+          Frequently asked questions
+        </p>
+        <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+          Answers to commonly asked questions about ARC
+        </p>
+      </div>
+      <div
+        x-data="{
+  activeAccordion: '',
+  setActiveAccordion(id) {
+  this.activeAccordion = (this.activeAccordion == id) ? '' : id
+  }
+  }"
+        class="relative w-full mx-auto font-normal lg:col-span-2">
+        {
+          [
+            {
+              q: "What is ARC?",
+              a: "ARC (Academic Risk & Change) is a multi-role school academic-management and early-intervention platform. Students, teachers, parents and admins each get their own tailored workspace to track marks, attendance, assignments, timetables and interventions school-wide.",
+            },
+            {
+              q: "Does ARC work without internet?",
+              a: "Yes. ARC is offline-first — the full school dataset lives on the device, so attendance, marks and dashboards work with no signal. Optional live cloud sync (Firebase Realtime Database) mirrors changes across devices in real time when enabled.",
+            },
+            {
+              q: "Can the AI invent numbers?",
+              a: "No. Every AI output is computed from real app statistics — never invented figures. Estimates are clearly labelled, drafts are always teacher-reviewed before publishing, and if the AI backend is unreachable the app silently switches to a built-in deterministic analytics engine (shown as \u201COffline engine\u201D).",
+            },
+            {
+              q: "How does the early-warning system work?",
+              a: "Rule-based flags detect subject decline, low overall percentage, low attendance and missing assignments. Each flag gets an urgency score and suggested actions, and published flags automatically notify the student and their parents.",
+            },
+            {
+              q: "Are there demo accounts I can try?",
+              a: "Yes — the login screen lists one-tap demo accounts for all four roles: Aarav (student), Kavita (teacher), Rahul (parent) and Priya (admin). A \u201CReset demo\u201D option restores the seeded dataset (120 students, 5 classes) at any time.",
+            },
+            {
+              q: "How do report cards work?",
+              a: "Professional A4 PDF report cards are generated entirely on-device with zero dependencies — overall percentage, grade, attendance and per-subject trends. They share via the system share sheet and print, and teachers can package one PDF per student into a single ZIP.",
+            },
+            {
+              q: "How does a school get started?",
+              a: "A school registers a single admin account, which provisions the whole hierarchy — admin → teachers → parents → students, each with their own login. No servers to set up, no configuration calls.",
+            },
+          ].map(({ q, a }, index) => (
+            <div
+              x-data="{ id: $id('accordion') }"
+              :class="{ 'text-black': activeAccordion==id, 'text-zinc-600 hover:text-accent-500': activeAccordion!=id }"
+              class="cursor-pointer group text-black">
+              <button
+                @click="setActiveAccordion(id)"
+                class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
+                <span>{q}</span>
+                <svg
+                  class="size-5 duration-300 ease-out text-accent-500"
+                  :class="{ '-rotate-[45deg]': activeAccordion==id }"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m6-6H6">
+                  </path>
+                </svg>
+              </button>
+              <div x-show="activeAccordion==id" x-collapse="" style="display: none;">
+                <div class="p-4 pt-2 text-zinc-500">{a}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
